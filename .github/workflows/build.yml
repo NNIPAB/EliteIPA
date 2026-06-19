@@ -1,0 +1,12 @@
+name: Build Elite IPA
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate and Build
+        run: |
+          brew install xcodegen
+          xcodegen
+          xcodebuild -scheme EliteIPA -configuration Release build
