@@ -1,22 +1,19 @@
 name: Build Elite IPA
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 
 jobs:
   build:
     runs-on: macos-14
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Generate Project
+      - uses: actions/checkout@v4
+      - name: Debug and Build
         run: |
           brew install xcodegen
           xcodegen generate
-
-      - name: Build
-        run: |
+          echo "--- قائمة الملفات الموجودة حالياً ---"
+          ls -F
+          echo "--- الـ Schemes المتاحة ---"
+          xcodebuild -list
+          echo "--- محاولة البناء ---"
           xcodebuild -scheme EliteIPA -configuration Release build
